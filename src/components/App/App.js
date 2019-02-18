@@ -7,7 +7,8 @@ class App extends Component {
 
   state = {
     lat: null,
-    lng: null
+    lng: null,
+    unit: true
   }
 
   componentDidMount() {
@@ -17,7 +18,7 @@ class App extends Component {
   // sets position to use for getting the weater at your current location
   getGeoLocation = async () => {
     try { 
-        await navigator.geolocation.getCurrentPosition((currentPosition) => {
+      await navigator.geolocation.getCurrentPosition((currentPosition) => {
         console.log('something', currentPosition.coords);
         this.setState({
           ...this.state,
@@ -32,16 +33,41 @@ class App extends Component {
     }
   }
 
+  toggleUnit = () => {
+    this.setState({ unit: !this.state.unit});
+  }
+
+  toFahrenheit = (temp) => {
+    let fahrenheit = (temp - 273.15) * 9/5 + 32;
+    return fahrenheit;
+  }
+
+  toCelsius = (temp) => {
+    let fahrenheit = temp - 273.15;
+    return fahrenheit;
+  }
+
   render() {
+    console.log('toggle unit clicked', this.state.unit);
+    const unit = this.state.unit;
     return (
       <div className="App">
-        {JSON.stringify(this.props.reduxState.currentWeather)}
-        {JSON.stringify(this.props.reduxState.currentWeather.name)}
-        {JSON.stringify(this.state)}
-        <header className="App-header">
-          <p>Location: {this.props.reduxState.currentWeather.name}</p>
+        {/* {JSON.stringify(this.props.reduxState.currentWeather)} */}
+        {JSON.stringify(this.props.reduxState.currentWeather.main)}
+        <section className="App-header">
+          {this.props.reduxState.currentWeather.main &&
+          <div>
+            <p>Location: {this.props.reduxState.currentWeather.name}</p>
+            {unit ? (
+              <p>Temp: {this.toFahrenheit(this.props.reduxState.currentWeather.main.temp)} &#8457;</p>
+            ) : ( 
+              <p>Temp: {this.toCelsius(this.props.reduxState.currentWeather.main.temp)} &#8451;</p>
+            )}
+            <p>Humidity: {this.props.reduxState.currentWeather.main.humidity}</p> 
+          </div>}
           <img src={logo} className="App-logo" alt="logo" />
-        </header>
+          <button onClick={this.toggleUnit}>&#8451; / &#8457;</button>
+        </section>
       </div>
     );
   }

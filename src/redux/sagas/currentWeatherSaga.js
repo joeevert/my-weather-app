@@ -1,10 +1,11 @@
 import axios from 'axios';
 import { call, put, takeEvery } from 'redux-saga/effects';
 
-function* fetchCurrentWeather() {
-  console.log('fetchCurrentWeather saga');
+function* fetchCurrentWeather(action) {
+  console.log('fetchCurrentWeather saga', action.payload);
   try {
-    const response = yield call(axios.get, '/api/owm');
+    const currentPosition = action.payload;
+    const response = yield call(axios.post, `/api/owm/`, currentPosition);
     yield put( {type: 'SET_CURRENT_WEATHER', payload: response.data});
     console.log('response.data', response.data);
   }

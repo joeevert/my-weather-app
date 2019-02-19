@@ -5,6 +5,7 @@ import './App.css';
 import Loading from '../Loading/Loading';
 import SearchLocation from '../SearchLocation/SearchLocation';
 import Favorites from '../Favorites/Favorites';
+import Footer from '../Footer/Footer';
 
 let today = new Date();
 
@@ -18,7 +19,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.getGeoLocation();
+    // this.getGeoLocation();
   }
 
   // sets position to use for getting the weater at your current location
@@ -70,9 +71,11 @@ class App extends Component {
           {!this.state.lat && <Loading />}
           {this.props.reduxState.currentWeather.main &&
           <div>
-            <p>{moment(today).format('MMMM Do YYYY, h:mm a')}</p>
+            <div className="date">
+              <p>{moment(today).format('LLL')}</p>
+            </div>
             <h1 className="name">{this.props.reduxState.currentWeather.name}</h1>
-            <button className="toggle-btn" onClick={() => this.addFavorite(this.props.reduxState.currentWeather)}>ADD TO FAVORITES</button>
+            {/* <button className="toggle-btn" onClick={() => this.addFavorite(this.props.reduxState.currentWeather)}>ADD TO FAVORITES</button> */}
               {this.props.reduxState.currentWeather.weather && this.props.reduxState.currentWeather.weather.map( (weather, index) => 
               <p key={index} className="description">{weather.main}</p>)}
             <div className="temperature-bg">
@@ -84,11 +87,18 @@ class App extends Component {
             </div>
             {/* <p>Humidity: {this.props.reduxState.currentWeather.main.humidity}%</p>  */}
           </div>}
-          <button className="toggle-btn" onClick={this.toggleUnit}>&#8451; / &#8457;</button>
+          <button className="toggle-btn" onClick={this.toggleUnit}>
+            {this.state.unit ? (
+              <span>&#8451; / <b>&#8457;</b></span> 
+            ) : ( 
+              <span><b>&#8451;</b> / &#8457;</span>
+            )}
+          </button>
           <br />
           <button className="toggle-btn" onClick={this.getGeoLocation}>WEATHER FOR CURRENT LOCATION</button>
           <SearchLocation />
           <Favorites />
+          <Footer />
         </section>
       </main>
     );

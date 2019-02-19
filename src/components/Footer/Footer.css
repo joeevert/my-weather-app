@@ -1,0 +1,9 @@
+footer {
+  width: 100vw;
+  border-top: 1px solid #ffffff;
+}
+
+.logo {
+  width: 50px;
+  height: auto;
+}

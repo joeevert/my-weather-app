@@ -11,6 +11,13 @@
   color: white;
 }
 
+.date {
+  /* background-color: #0F1726; */
+  background-color: #282c34;
+  width: 100vw;
+  padding: .25vmin;
+}
+
 .description {
   margin: 0px;
 }

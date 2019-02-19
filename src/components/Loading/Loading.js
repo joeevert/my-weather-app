@@ -1,8 +1,8 @@
 import React from 'react';
-import './Loading.css'
+import './Loading.css';
 
 const Loading = () => (
-  <div class="lds-spinner">
+  <div className="lds-spinner">
     <div />
     <div />
     <div />

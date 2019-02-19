@@ -26,13 +26,11 @@
   color: #ffffff;
 }
 
-button {
-  background-color: #ffffff; /* Green */
-  border: none;
-  color: #282c34;
-  padding: 15px 30px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: calc(10px + 2vmin);
+.toggle-btn {
+  padding: 10px 10px;
+  margin-top: 15px;
+  background-color: #282c34;
+  border: 1px solid #fff;
+  color: #ffffff;
+  cursor: pointer;
 }

@@ -54,7 +54,6 @@ class App extends Component {
   }
 
   render() {
-    console.log('toggle unit clicked', this.state.unit);
     const unit = this.state.unit;
     return (
       <main className="App">
@@ -75,7 +74,9 @@ class App extends Component {
             </div>
             {/* <p>Humidity: {this.props.reduxState.currentWeather.main.humidity}%</p>  */}
           </div>}
-          <button onClick={this.toggleUnit}>&#8451; / &#8457;</button>
+          <button className="toggle-btn" onClick={this.toggleUnit}>&#8451; / &#8457;</button>
+          <br />
+          <button className="toggle-btn" onClick={this.getGeoLocation}>WEATHER FOR CURRENT LOCATION</button>
           <SearchLocation />
         </section>
       </main>

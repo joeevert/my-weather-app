@@ -2,6 +2,7 @@ const axios = require('axios');
 const express = require('express');
 const router = express.Router();
 
+// gets the weather for the location being searched
 router.post('/', (req, res) => {
   let search = req.body.search;
   console.log('search', req.body.search);

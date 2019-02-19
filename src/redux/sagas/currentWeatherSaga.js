@@ -5,7 +5,7 @@ function* fetchCurrentWeather(action) {
   console.log('fetchCurrentWeather saga', action.payload);
   try {
     const currentPosition = action.payload;
-    const response = yield call(axios.post, `/api/owm/`, currentPosition);
+    const response = yield call(axios.post, '/api/owm/', currentPosition);
     yield put( {type: 'SET_CURRENT_WEATHER', payload: response.data});
     console.log('response.data', response.data);
   }

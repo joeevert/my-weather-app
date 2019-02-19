@@ -14,29 +14,31 @@ class SearchLocation extends Component {
     });
   }
 
+  // dispatches location search query
   handleSubmit = (event) => {
     event.preventDefault();
     this.props.dispatch({ type: 'FETCH_SEARCH_RESULTS', payload: this.state });
+    this.setState({ search: '' })
   }
 
   render() {
-    console.log('state', this.state.search);
-    
     return (
       <section className="search">
         <form onSubmit={this.handleSubmit}>
           <input
+            className="search-field"
             type="text" 
             onChange={this.handleChange('search')}
             name="search" 
             value={this.state.search} 
             placeholder="Search..."
           />
-          <br />
-          <input 
+          <button
+            className="submit-btn" 
             type="submit"
-            value="SUBMIT"
-          />
+          >
+            SUBMIT
+          </button>
         </form>
       </section>
     );

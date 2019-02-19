@@ -2,6 +2,7 @@ const axios = require('axios');
 const express = require('express');
 const router = express.Router();
 
+// gets the weather for your current location
 router.post('/', (req, res) => {
   let lat = req.body.lat;
   let lon = req.body.lng;

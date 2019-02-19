@@ -9,9 +9,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Routes Required
 const owmRouter = require('./routes/owm.router');
+const owmSearchRouter = require('./routes/search.router');
 
 // Routes
 app.use('/api/owm', owmRouter);
+app.use('/api/search', owmSearchRouter);
 
 // Server static build
 app.use(express.static('build'));

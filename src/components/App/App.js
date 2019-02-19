@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import logo from './logo.svg';
+import moment from 'moment';
 import './App.css';
+import SearchLocation from '../SearchLocation/SearchLocation';
+
+let today = new Date();
 
 class App extends Component {
 
@@ -23,7 +26,7 @@ class App extends Component {
         this.setState({
           ...this.state,
           lat: currentPosition.coords.latitude,
-          lng: currentPosition.coords.longitude
+          lng: currentPosition.coords.longitude,
         })
         this.props.dispatch({ type: 'FETCH_CURRENT_WEATHER', payload: this.state});
       }) 
@@ -33,42 +36,49 @@ class App extends Component {
     }
   }
 
+  // toggles between fahrenheit and celsius
   toggleUnit = () => {
     this.setState({ unit: !this.state.unit});
   }
 
+  // converts temp from K to F
   toFahrenheit = (temp) => {
     let fahrenheit = (temp - 273.15) * 9/5 + 32;
-    return fahrenheit;
+    return Math.round(fahrenheit);
   }
 
+  // converts temp from K to C
   toCelsius = (temp) => {
-    let fahrenheit = temp - 273.15;
-    return fahrenheit;
+    let celsius = temp - 273.15;
+    return Math.round(celsius);
   }
 
   render() {
     console.log('toggle unit clicked', this.state.unit);
     const unit = this.state.unit;
     return (
-      <div className="App">
+      <main className="App">
         {/* {JSON.stringify(this.props.reduxState.currentWeather)} */}
-        {JSON.stringify(this.props.reduxState.currentWeather.main)}
-        <section className="App-header">
+        <section>
           {this.props.reduxState.currentWeather.main &&
           <div>
-            <p>Location: {this.props.reduxState.currentWeather.name}</p>
+            <p>{moment(today).format('MMMM Do YYYY, h:mm a')}</p>
+            <h1 className="name">{this.props.reduxState.currentWeather.name}</h1>
+              {this.props.reduxState.currentWeather.weather && this.props.reduxState.currentWeather.weather.map( (weather, index) => 
+              <p key={index} className="description">{weather.main}</p>)}
+            <div className="temperature-bg">
             {unit ? (
-              <p>Temp: {this.toFahrenheit(this.props.reduxState.currentWeather.main.temp)} &#8457;</p>
+              <h1 className="temperature">{this.toFahrenheit(this.props.reduxState.currentWeather.main.temp)} &deg;</h1>
             ) : ( 
-              <p>Temp: {this.toCelsius(this.props.reduxState.currentWeather.main.temp)} &#8451;</p>
+              <h1 className="temperature">{this.toCelsius(this.props.reduxState.currentWeather.main.temp)} &deg;</h1>
             )}
-            <p>Humidity: {this.props.reduxState.currentWeather.main.humidity}</p> 
+            </div>
+            {/* <p>Humidity: {this.props.reduxState.currentWeather.main.humidity}%</p>  */}
           </div>}
-          <img src={logo} className="App-logo" alt="logo" />
           <button onClick={this.toggleUnit}>&#8451; / &#8457;</button>
+          <SearchLocation />
         </section>
-      </div>
+      </main>
     );
   }
 }

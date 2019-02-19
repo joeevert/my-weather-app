@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import './App.css';
+import Loading from '../Loading/Loading';
 import SearchLocation from '../SearchLocation/SearchLocation';
 import Favorites from '../Favorites/Favorites';
 
@@ -66,6 +67,7 @@ class App extends Component {
       <main className="App">
         {/* {JSON.stringify(this.props.reduxState.currentWeather)} */}
         <section>
+          {!this.state.lat && <Loading />}
           {this.props.reduxState.currentWeather.main &&
           <div>
             <p>{moment(today).format('MMMM Do YYYY, h:mm a')}</p>

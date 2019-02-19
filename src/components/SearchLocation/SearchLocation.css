@@ -16,3 +16,8 @@
   color: #ffffff;
   cursor: pointer;
 }
+
+.submit-btn:hover {
+  background-color: #626977;
+  color: #fff;
+}

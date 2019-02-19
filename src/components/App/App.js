@@ -3,14 +3,16 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import './App.css';
 import SearchLocation from '../SearchLocation/SearchLocation';
+import Favorites from '../Favorites/Favorites';
 
 let today = new Date();
 
 class App extends Component {
 
   state = {
-    lat: null,
-    lng: null,
+    lat: undefined,
+    lng: undefined,
+    cityID: undefined,
     unit: true
   }
 
@@ -22,18 +24,23 @@ class App extends Component {
   getGeoLocation = async () => {
     try { 
       await navigator.geolocation.getCurrentPosition((currentPosition) => {
-        console.log('something', currentPosition.coords);
+        console.log('currentPosition', currentPosition.coords);
         this.setState({
           ...this.state,
           lat: currentPosition.coords.latitude,
           lng: currentPosition.coords.longitude,
         })
         this.props.dispatch({ type: 'FETCH_CURRENT_WEATHER', payload: this.state});
-      }) 
+      })
     }
     catch (error) {
       console.log('ERROR in getGeoLocation:', error)
     }
+  }
+
+  addFavorite = (id) => {
+    console.log('cityID', id);
+    this.props.dispatch({ type: 'ADD_TO_FAVORITES', payload: id });
   }
 
   // toggles between fahrenheit and celsius
@@ -63,6 +70,7 @@ class App extends Component {
           <div>
             <p>{moment(today).format('MMMM Do YYYY, h:mm a')}</p>
             <h1 className="name">{this.props.reduxState.currentWeather.name}</h1>
+            <button className="toggle-btn" onClick={() => this.addFavorite(this.props.reduxState.currentWeather)}>ADD TO FAVORITES</button>
               {this.props.reduxState.currentWeather.weather && this.props.reduxState.currentWeather.weather.map( (weather, index) => 
               <p key={index} className="description">{weather.main}</p>)}
             <div className="temperature-bg">
@@ -78,6 +86,7 @@ class App extends Component {
           <br />
           <button className="toggle-btn" onClick={this.getGeoLocation}>WEATHER FOR CURRENT LOCATION</button>
           <SearchLocation />
+          <Favorites />
         </section>
       </main>
     );

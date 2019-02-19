@@ -18,7 +18,7 @@ class SearchLocation extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     this.props.dispatch({ type: 'FETCH_SEARCH_RESULTS', payload: this.state });
-    this.setState({ search: '' })
+    this.setState({ search: '' });
   }
 
   render() {

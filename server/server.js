@@ -8,12 +8,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Routes Required
-const owmRouter = require('./routes/owm.router');
-const owmSearchRouter = require('./routes/search.router');
+const currentWeatherRouter = require('./routes/currentWeather.router');
+const favoritesRouter = require('./routes/favorites.router');
+const searchRouter = require('./routes/search.router');
 
 // Routes
-app.use('/api/owm', owmRouter);
-app.use('/api/search', owmSearchRouter);
+app.use('/api/owm', currentWeatherRouter);
+app.use('/api/favorites', favoritesRouter);
+app.use('/api/search', searchRouter);
 
 // Server static build
 app.use(express.static('build'));

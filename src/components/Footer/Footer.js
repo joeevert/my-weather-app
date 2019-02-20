@@ -21,6 +21,24 @@ class Footer extends Component {
     this.props.history.push('/home');
   }
 
+  // sets position to use for getting the weater at your current location
+  getGeoLocation = async () => {
+    try { 
+      await navigator.geolocation.getCurrentPosition((currentPosition) => {
+        console.log('currentPosition', currentPosition.coords);
+        this.setState({
+          ...this.state,
+          lat: currentPosition.coords.latitude,
+          lng: currentPosition.coords.longitude,
+        })
+        this.props.dispatch({ type: 'FETCH_CURRENT_WEATHER', payload: this.state });
+      })
+    }
+    catch (error) {
+      console.log('ERROR in getGeoLocation:', error)
+    }
+  }
+
   render() {
     const { classes } = this.props;
     return (
@@ -30,7 +48,7 @@ class Footer extends Component {
             <img className={classes.logo} src={TWC_logo} alt="The Weather Channel"/>
           </a>
           <Tooltip title="Current Location" aria-label="Current Location">
-            <Fab color="primary" aria-label="My Location" className={classes.fabButton} onClick={this.goHome}>
+            <Fab color="primary" aria-label="My Location" className={classes.fabButton} onClick={this.getGeoLocation}>
               <MyLocation />
             </Fab>
           </Tooltip>

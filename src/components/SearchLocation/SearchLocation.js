@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import './SearchLocation.css';
 
 // material-ui
 import { withStyles } from '@material-ui/core/styles';

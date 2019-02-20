@@ -32,7 +32,7 @@ class Home extends Component {
           lat: currentPosition.coords.latitude,
           lng: currentPosition.coords.longitude,
         })
-        this.props.dispatch({ type: 'FETCH_CURRENT_WEATHER', payload: this.state});
+        this.props.dispatch({ type: 'FETCH_CURRENT_WEATHER', payload: this.state });
       })
     }
     catch (error) {
@@ -112,7 +112,8 @@ const styles = {
     color: '#ffffff'
   },
   toggle: {
-    margin: '50px'
+    margin: '50px',
+    border: '1px solid #ffffff'
   }
 };
 

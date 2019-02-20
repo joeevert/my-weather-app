@@ -2,11 +2,9 @@
   text-align: center;
   background-color: #464D59;
   min-width: 100vw;
-  min-height: 100vh;
   display: flex;
-  flex-direction: column;
   justify-content: center;
-  /* font-size: calc(10px + 2vmin); */
+  font-size: calc(10px + 2vmin);
   color: white;
 }
 
@@ -21,7 +19,7 @@
   color: #ffffff;
 }
 
-/* .toggle-btn {
+.toggle-btn {
   padding: 10px 10px;
   margin-top: 15px;
   background-color: #282c34;
@@ -33,4 +31,4 @@
 .toggle-btn:hover {
   background-color: #626977;
   color: #fff;
-} */
+}

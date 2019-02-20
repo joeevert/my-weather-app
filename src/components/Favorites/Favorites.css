@@ -1,0 +1,41 @@
+.favorites {
+  flex-grow: 1;
+}
+
+ul {
+  padding: 0px;
+}
+
+li {
+  text-align: left;
+  list-style: none;
+  padding: 15px 0px;
+  cursor: pointer;
+}
+
+li:nth-child(even) {
+  background-color: hsla(0, 0%, 0%, 15%);
+}
+
+.list-name {
+  margin: 0px;
+  margin-left: 50px;
+}
+
+.toggle-btn {
+  padding: 10px;
+  margin-top: 15px;
+  background-color: #282c34;
+  border: 1px solid #fff;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.toggle-btn:hover {
+  background-color: #626977;
+  color: #fff;
+}
+
+.remove-btn {
+  cursor: pointer;
+}

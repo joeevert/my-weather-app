@@ -24,9 +24,21 @@ function* fetchFavorites() {
   }
 }
 
+function* removeFavorite(action) {
+  try {
+    const id = action.payload;
+    yield call(axios.delete, `/api/favorites/${id}`);
+    yield put({ type: 'FETCH_FAVORITES' });
+  }
+  catch(error) {
+    console.log('ERROR removing favorite', error);
+  }
+}
+
 function* favoritesSaga() {
   yield takeEvery( 'FETCH_FAVORITES', fetchFavorites);
   yield takeEvery( 'ADD_TO_FAVORITES', addFavorite);
+  yield takeEvery( 'REMOVE_LOCATION_FROM_FAVORITES', removeFavorite);
 }
 
 export default favoritesSaga;

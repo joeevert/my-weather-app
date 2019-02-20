@@ -1,16 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import './Home.css';
 import Loading from '../Loading/Loading';
-import Header from '../Header/Header';
 import SearchLocation from '../SearchLocation/SearchLocation';
-import Footer from '../Footer/Footer';
 
-// fa icons
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { faList, faCircle } from '@fortawesome/free-solid-svg-icons';
-
-library.add(faList, faCircle);
+// material-ui
+import { withStyles } from '@material-ui/core/styles';
+import { Button, Typography, Tooltip } from '@material-ui/core';
 
 class Home extends Component {
 
@@ -18,7 +13,8 @@ class Home extends Component {
     lat: undefined,
     lng: undefined,
     cityID: undefined,
-    unit: true
+    unit: true,
+    search: ''
   }
 
   componentDidMount() {
@@ -44,10 +40,10 @@ class Home extends Component {
     }
   }
 
-  addFavorite = (id) => {
-    console.log('cityID', id);
-    this.props.dispatch({ type: 'ADD_TO_FAVORITES', payload: id });
-  }
+  // addFavorite = (id) => {
+  //   console.log('cityID', id);
+  //   this.props.dispatch({ type: 'ADD_TO_FAVORITES', payload: id });
+  // }
 
   // toggles between fahrenheit and celsius
   toggleUnit = () => {
@@ -67,46 +63,64 @@ class Home extends Component {
   }
 
   render() {
+    const { classes } = this.props;
     const unit = this.state.unit;
     return (
       <section>
-        {/* <Header /> */}
-        {/* {JSON.stringify(this.props.reduxState.currentWeather)} */}
-        {/* <section> */}
-          {!this.state.lat && <Loading />}
-          {this.props.reduxState.currentWeather.main &&
-          <div>
-            <h1>{this.props.reduxState.currentWeather.name}</h1>
-              {this.props.reduxState.currentWeather.weather && this.props.reduxState.currentWeather.weather.map( (weather, index) => 
-              <p key={index} className="description">{weather.main}</p>)}
-            <div className="temperature-bg">
-            {unit ? (
-              <h1 className="temperature">{this.toFahrenheit(this.props.reduxState.currentWeather.main.temp)} &deg;</h1>
-            ) : ( 
-              <h1 className="temperature">{this.toCelsius(this.props.reduxState.currentWeather.main.temp)} &deg;</h1>
-            )}
-            </div>
-          </div>}
-          <button className="toggle-btn" onClick={this.toggleUnit}>
+        {/* {JSON.stringify(this.props.currentWeather)} */}
+        {!this.props.name && <Loading />}
+        <Typography className={classes.location} variant="h3">
+          {this.props.name && this.props.name}
+        </Typography>
+        <Typography className={classes.description} variant="h4">
+          {this.props.description && this.props.description[0].main}
+        </Typography>
+        {unit ? (
+          <Typography className={classes.temperature} variant="h1">
+            {this.toFahrenheit(this.props.temperature && this.props.temperature.temp)} &deg;
+          </Typography>
+        ) : ( 
+          <Typography className={classes.temperature} variant="h1">
+            {this.toCelsius(this.props.temperature && this.props.temperature.temp)} &deg;
+          </Typography>
+        )}
+        <Tooltip title="Toggle Unit" aria-label="Toggle Unit">
+          <Button className={classes.toggle} color="primary" variant="contained" onClick={this.toggleUnit}>
             {this.state.unit ? (
               <span>&#8451; / <b>&#8457;</b></span> 
             ) : ( 
               <span><b>&#8451;</b> / &#8457;</span>
             )}
-          </button>
-          <br />
-          <button className="toggle-btn" onClick={this.getGeoLocation}>WEATHER FOR CURRENT LOCATION</button>
-          {/* <SearchLocation /> */}
-          {/* <Favorites /> */}
-          {/* <Footer favorites={this.props.reduxState.favorites} /> */}
-        {/* </section> */}
+          </Button>
+        </Tooltip>
+        <SearchLocation search={this.state.search} />
       </section>
     );
   }
 }
 
+const styles = {
+  location: {
+    color: '#ffffff',
+    marginBottom: '15px'
+  },
+  description: {
+    color: '#ffffff',
+    marginBottom: '15px'
+  },
+  temperature: {
+    color: '#ffffff'
+  },
+  toggle: {
+    margin: '50px'
+  }
+};
+
 const mapReduxStateToProps = (reduxState) => ({
-  reduxState
+  currentWeather: reduxState.currentWeather,
+  name: reduxState.currentWeather.name,
+  description: reduxState.currentWeather.weather,
+  temperature: reduxState.currentWeather.main
 });
 
-export default connect(mapReduxStateToProps)(Home);
+export default connect(mapReduxStateToProps)(withStyles(styles)(Home));

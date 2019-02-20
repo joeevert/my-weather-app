@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './Favorites.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import SearchLocation from '../SearchLocation/SearchLocation';
+
+// import { withStyles } from '@material-ui/core/styles';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+import RemoveIcon from '@material-ui/icons/Remove';
+
 
 class Favorites extends Component {
 
@@ -10,7 +15,6 @@ class Favorites extends Component {
     lat: undefined,
     lng: undefined,
     cityID: undefined,
-    unit: true
   }
 
   // get your saved favorites
@@ -28,35 +32,31 @@ class Favorites extends Component {
     this.setState({ unit: !this.state.unit});
   }
 
+  // removes location from your favorites list
   removeLocation = (id) => {
     console.log('id', id);
     this.props.dispatch({ type: 'REMOVE_LOCATION_FROM_FAVORITES', payload: id });
   }
 
   render() {
-    const unit = this.state.unit;
-    console.log('unit', unit);
-    
     return (
       <section className="favorites">
         <ul>
           {this.props.reduxState.favorites.map(favorite => 
             <li key={favorite.id}>
-              <div className="list-name" onClick={() => this.viewThisLocation(favorite.cityID)}>{favorite.name}</div>
-              <FontAwesomeIcon className="remove-btn" icon="minus-circle" onClick={() => this.removeLocation(favorite.id)}/>
+              {/* <div className="list-name"> */}
+                <div onClick={() => this.viewThisLocation(favorite.cityID)}>{favorite.name}</div>
+                <Fab className="remove-btn" color="secondary" onClick={() => this.removeLocation(favorite.id)}>
+                  <RemoveIcon />
+                </Fab>
+              {/* </div> */}
             </li>
           )}
         </ul>
         <SearchLocation />
-        <button className="toggle-btn" onClick={this.toggleUnit}>
-          {unit ? (
-            <span>&#8451; / <b>&#8457;</b></span> 
-          ) : ( 
-            <span><b>&#8451;</b> / &#8457;</span>
-          )}
-        </button>
-        <FontAwesomeIcon className="favorites-btn" onClick={() => this.addFavorite(this.props.reduxState.currentWeather)} icon="plus-circle" />
-        {/* <button className="toggle-btn" onClick={() => this.addFavorite(this.props.reduxState.currentWeather)}>ADD TO FAVORITES</button> */}
+        <Fab className="remove-btn" color="secondary" onClick={() => this.addFavorite(this.props.reduxState.currentWeather)} >
+          <AddIcon />
+        </Fab>
       </section>
     );
   }

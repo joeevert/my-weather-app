@@ -1,8 +1,8 @@
 .lds-spinner {
-  color: official;
-  display: block;
+  /* color: official; */
+  display: inline-block;
   margin: auto;
-  padding: 100px;
+  /* padding: 100px; */
   position: relative;
   width: 64px;
   height: 64px;

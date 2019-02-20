@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import './SearchLocation.css';
+// import './SearchLocation.css';
+
+// material-ui
+import { withStyles } from '@material-ui/core/styles';
+import { Paper, InputBase, IconButton } from '@material-ui/core';
+import SearchIcon from '@material-ui/icons/Search';
 
 class SearchLocation extends Component {
 
@@ -22,31 +27,49 @@ class SearchLocation extends Component {
   }
 
   render() {
+    const { classes } = this.props;
     return (
-      <section className="search">
+      <section>
         <form onSubmit={this.handleSubmit}>
-          <input
-            className="search-field"
-            type="text" 
-            onChange={this.handleChange('search')}
-            name="search" 
-            value={this.state.search} 
-            placeholder="Search..."
-          />
-          <button
-            className="submit-btn" 
-            type="submit"
-          >
-            SUBMIT
-          </button>
+          <Paper className={classes.paper} elevation={1}>
+            <InputBase 
+              className={classes.input} 
+              type="text" 
+              onChange={this.handleChange('search')}
+              name="search" 
+              value={this.state.search} 
+              placeholder="Search..."
+            />
+            <IconButton className={classes.iconButton} aria-label="Search" type="submit">
+              <SearchIcon />
+            </IconButton>
+          </Paper>
         </form>
       </section>
     );
   }
 }
 
+const styles = {
+  paper: {
+    padding: '4px 2px',
+    display: 'flex',
+    alignItems: 'center',
+    margin: 'auto',
+    width: '300px',
+  },
+  input: {
+    marginLeft: '10px',
+    flex: 1,
+  },
+  submit: {
+    padding: '10px',
+  }
+};
+
+
 const mapReduxStateToProps = (reduxState) => ({
   reduxState
 });
 
-export default connect(mapReduxStateToProps)(SearchLocation);
+export default connect(mapReduxStateToProps)(withStyles(styles)(SearchLocation));

@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {
-  HashRouter as Router,
-  Route,
-  Redirect,
-  Switch,
-} from 'react-router-dom';
+import { HashRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 import './App.css';
 import Home from '../Home/Home';
 import Header from '../Header/Header';
 import Favorites from '../Favorites/Favorites';
 import Footer from '../Footer/Footer';
+
+// material-ui
+import CssBaseline from '@material-ui/core/CssBaseline';
+import { MuiThemeProvider } from '@material-ui/core/styles';
+import muiTheme from '../Theme/muiTheme';
 
 // fa icons
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -23,7 +23,9 @@ class App extends Component {
   render() {
     return (
       <Router>
+        <MuiThemeProvider theme={muiTheme}>
         <main className="App">
+          <CssBaseline />
           <Header />
           <div>
             <Switch>
@@ -45,6 +47,7 @@ class App extends Component {
           </div>
         <Footer favorites={this.props.reduxState.favorites} />
         </main>
+        </MuiThemeProvider>
       </Router>
   )}
 }
